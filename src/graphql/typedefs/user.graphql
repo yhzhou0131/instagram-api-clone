@@ -1,0 +1,56 @@
+type User implements Timestamps {
+  id: ID!
+  name: String!
+  biography: String
+  posts: [Post!]
+  followers: [User!]
+  following: [User!]
+  likedPosts: [likedPost!]
+  commentedPosts: [commentedPost!]
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type likedUser implements Timestamps {
+  id: ID!
+  name: String!
+  biography: String
+  posts: [Post!]
+  followers: [User!]
+  following: [User!]
+  likedPosts: [likedPost!]
+  commentedPosts: [commentedPost!]
+
+  createdAt: Date!
+  updatedAt: Date!
+
+  likedTime: Date!
+}
+
+type commentedUser implements Timestamps {
+  id: ID!
+  name: String!
+  biography: String
+  posts: [Post!]
+  followers: [User!]
+  following: [User!]
+  likedPosts: [likedPost!]
+  commentedPosts: [commentedPost!]
+
+  createdAt: Date!
+  updatedAt: Date!
+
+  comment: String!
+  commentedTime: Date!
+}
+
+input UserCreateInput {
+  name: String!
+  biography: String
+}
+
+input UserUpdateInput {
+  name: String
+  biography: String
+}

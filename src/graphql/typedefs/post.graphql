@@ -1,0 +1,51 @@
+type Post implements Timestamps {
+  id: ID!
+  poster: User!
+  photo: [String!] # path to the server image repositroy
+  caption: String!
+  likedUsers: [likedUser!]
+  commentedUsers: [commentedUser!]
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type likedPost implements Timestamps {
+  id: ID!
+  poster: User!
+  photo: [String!]
+  caption: String!
+  likedUsers: [likedUser!]
+  commentedUsers: [commentedUser!]
+
+  createdAt: Date!
+  updatedAt: Date!
+
+  likedTime: Date!
+}
+
+type commentedPost implements Timestamps {
+  id: ID!
+  poster: User!
+  photo: [String!]
+  caption: String!
+  likedUsers: [likedUser!]
+  commentedUsers: [commentedUser!]
+
+  createdAt: Date!
+  updatedAt: Date!
+
+  comment: String!
+  commentedTime: Date!
+}
+
+input PostCreateInput {
+  poster: ID!
+  photo: [String!]
+  caption: String
+}
+
+input PostUpdateInput {
+  photo: [String]
+  caption: String
+}

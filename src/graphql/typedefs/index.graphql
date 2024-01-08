@@ -1,0 +1,23 @@
+scalar Date
+
+type Query {
+  # User
+  users: [User]!
+  user(id: ID!): User
+
+  # Post
+  posts: [Post]!
+  post(id: ID!): Post
+}
+
+type Mutation {
+  createUser(user: UserCreateInput!): User!
+  updateUser(id: ID!, user: UserUpdateInput!): User!
+  deleteUser(id: ID!): User
+  likePost(uid: ID!, postId: ID!): User
+  commentPost(uid: ID!, postId: ID!, comment: String!): User
+
+  createPost(post: PostCreateInput!): Post!
+  updatePost(id: ID!, post: PostUpdateInput!): Post!
+  deletePost(id: ID!): Post
+}
