@@ -15,6 +15,7 @@ type Mutation {
   updateUser(id: ID!, user: UserUpdateInput!): User!
   deleteUser(id: ID!): User
   likePost(uid: ID!, postId: ID!): User
+  dislikePost(uid: ID!, postId: ID!): User
   commentPost(uid: ID!, postId: ID!, comment: String!): User
 
   createPost(post: PostCreateInput!): Post!

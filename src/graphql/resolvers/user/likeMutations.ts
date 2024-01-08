@@ -20,6 +20,20 @@ const likeMutations = {
 
     return user;
   },
+  dislikePost: async (_, { uid, postId }) => {
+    const user = await User.findByIdAndUpdate(
+      uid,
+      {
+        $pull: { likedPosts: { id: postId } },
+      },
+      { new: true }
+    );
+    await Post.findByIdAndUpdate(postId, {
+      $pull: { likedUsers: { id: uid } },
+    });
+
+    return user;
+  },
 };
 
 export default likeMutations;
