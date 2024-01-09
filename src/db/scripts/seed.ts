@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import connectDB from '../index.js';
-import { Post, User } from '../models/index.js';
+import { CommentAt, Like, Post, User } from '../models/index.js';
 
 const seed = async () => {
   console.log('Cleanning database');
@@ -8,6 +8,8 @@ const seed = async () => {
   await connectDB();
   await mongoose.connection.dropCollection('posts');
   await mongoose.connection.dropCollection('users');
+  await mongoose.connection.dropCollection('likes');
+  await mongoose.connection.dropCollection('comments');
 
   console.log('Database clean');
 
@@ -22,23 +24,10 @@ const seed = async () => {
     new Post({
       caption: 'The incredible GraphQL',
       poster: users[0]?._id,
-      likedUsers: [
-        {
-          id: users[1]?._id,
-          time: Date.now(),
-        },
-      ],
     }),
     new Post({
       caption: 'Node.js Superman',
       poster: users[1]?._id,
-      commentedUsers: [
-        {
-          id: users[0]?._id,
-          comment: `Comment by ${users[0]?.name}`,
-          time: Date.now(),
-        },
-      ],
     }),
     new Post({ caption: 'Javascript Master', poster: users[2]?._id }),
     new Post({ caption: 'Building APIs with GraphQL', poster: users[2]?._id }),
@@ -56,25 +45,40 @@ const seed = async () => {
       name: 'User 4',
       followers: [users[0]?._id],
       following: [users[0]?._id],
-      likedPosts: [
-        {
-          id: posts[0]?._id,
-          time: Date.now(),
-        },
-      ],
-      commentedPosts: [
-        {
-          id: posts[0]?._id,
-          comment: 'Great!!!',
-          time: Date.now(),
-        },
-      ],
     })
   );
+
+  const likes = [
+    new Like({
+      uid: users[0]?._id,
+      postId: posts[0]?._id,
+    }),
+    new Like({
+      uid: users[0]?._id,
+      postId: posts[2]?._id,
+    }),
+  ];
+
+  const comments = [
+    new CommentAt({
+      uid: users[0]?._id,
+      posterId: posts[0]?.poster,
+      postId: posts[0]?._id,
+      comment: `Comment by ${users[0]?.name}`,
+    }),
+    new CommentAt({
+      uid: users[1]?._id,
+      posterId: posts[1]?.poster,
+      postId: posts[1]?._id,
+      comment: 'Great!!!',
+    }),
+  ];
 
   const savings = [
     ...users.map((user) => user.save()),
     ...posts.map((post) => post.save()),
+    ...likes.map((like) => like.save()),
+    ...comments.map((comment) => comment.save()),
   ];
 
   await Promise.all(savings);
