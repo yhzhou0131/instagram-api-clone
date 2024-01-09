@@ -13,13 +13,13 @@ This is a simple demo illustrating the interaction between Instagram users and p
 
 **For user**
 
-- CRUD operations for user and post.
-- Like/dislike a post
+- CRUD operations.
+- Like/dislike a post.
 - Add/Delete/Edit a comment to the post.
 
 **For post**
 
-- CRUD operations
+- CRUD operations.
 
 ## Run code
 
