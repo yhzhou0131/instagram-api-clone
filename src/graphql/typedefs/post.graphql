@@ -21,6 +21,7 @@ type likedPost implements Timestamps {
   createdAt: Date!
   updatedAt: Date!
 
+  likeId: ID!
   likedTime: Date!
 }
 
@@ -35,6 +36,7 @@ type commentedPost implements Timestamps {
   createdAt: Date!
   updatedAt: Date!
 
+  commentId: ID!
   comment: String!
   commentedTime: Date!
 }

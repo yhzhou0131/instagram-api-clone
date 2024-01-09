@@ -1,38 +1,23 @@
-import { User, Post } from '@/db/models/index.js';
+import { Like } from '@/db/models/index.js';
 
 const likeMutations = {
   likePost: async (_, { uid, postId }) => {
     const curTime = Date.now();
-    const resUser = await User.updateOne(
-      { _id: uid, 'likedPosts.id': { $ne: postId } },
-      { $addToSet: { likedPosts: { id: postId, time: curTime } } }
-    );
-    const resPost = await Post.updateOne(
-      { _id: postId, 'likedUsers.id': { $ne: uid } },
-      { $addToSet: { likedUsers: { id: uid, time: curTime } } }
+    const res = await Like.updateOne(
+      { uid, postId },
+      { $setOnInsert: { uid, postId, time: curTime } },
+      { upsert: true }
     );
 
-    if (resUser.modifiedCount !== resPost.modifiedCount) {
-      throw new Error('Something went wrong when updating the like.');
-    }
-
-    const user = await User.findById(uid);
-
-    return user;
+    return res.upsertedCount > 0;
   },
   dislikePost: async (_, { uid, postId }) => {
-    const user = await User.findByIdAndUpdate(
+    const res = await Like.deleteOne({
       uid,
-      {
-        $pull: { likedPosts: { id: postId } },
-      },
-      { new: true }
-    );
-    await Post.findByIdAndUpdate(postId, {
-      $pull: { likedUsers: { id: uid } },
+      postId,
     });
 
-    return user;
+    return res.deletedCount > 0;
   },
 };
 

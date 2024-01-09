@@ -1,4 +1,4 @@
-import { Post, User } from '@/db/models/index.js';
+import { CommentAt, Like, Post, User } from '@/db/models/index.js';
 
 const userFields = {
   User: {
@@ -12,24 +12,32 @@ const userFields = {
       return user.following.map((uid) => User.findById(uid));
     },
     likedPosts: async (user: any) => {
+      const userLikes = await Like.find({ uid: user._id });
       return await Promise.all(
-        user.likedPosts.map(async (likedPost) => {
-          const post = await Post.findById(likedPost.id).lean();
+        userLikes.map(async (userLike) => {
+          const post = await Post.findById(userLike.postId).lean();
           return {
             ...post,
-            likedTime: likedPost.time,
+            likeId: userLike._id,
+            likedTime: userLike.createdAt,
           };
         })
       );
     },
     commentedPosts: async (user: any) => {
+      const userComments = await CommentAt.find({ uid: user._id }).setOptions({
+        sort: { updatedAt: -1 },
+      });
       return await Promise.all(
-        user.commentedPosts.map(async (commentPost) => {
-          const post = await Post.findById(commentPost.id).lean();
+        userComments.map(async (userComment) => {
+          const post = await Post.findById(userComment.postId)
+            .populate('poster')
+            .lean();
           return {
             ...post,
-            comment: commentPost.comment,
-            commentedTime: commentPost.time,
+            commentId: userComment._id,
+            comment: userComment.comment,
+            commentedTime: userComment.updatedAt,
           };
         })
       );

@@ -1,40 +1,48 @@
-import { User, Post } from '@/db/models/index.js';
+import { CommentAt, Post } from '@/db/models/index.js';
 
 const commentMutations = {
-  commentPost: async (_, { uid, postId, comment }) => {
-    const curTime = Date.now();
-    const resUser = await User.updateOne(
-      { _id: uid },
-      {
-        $addToSet: {
-          commentedPosts: {
-            id: postId,
-            comment: comment,
-            time: curTime,
-          },
-        },
-      }
-    );
-    const resPost = await Post.updateOne(
-      { _id: postId },
-      {
-        $addToSet: {
-          commentedUsers: {
-            id: uid,
-            comment: comment,
-            time: curTime,
-          },
-        },
-      }
-    );
+  addComment: async (_, { uid, postId, comment }) => {
+    const posterId = (await Post.findById(postId))?.poster;
+    const res = await new CommentAt({
+      uid,
+      posterId,
+      postId,
+      comment,
+    }).save();
 
-    if (resUser.modifiedCount !== resPost.modifiedCount) {
-      throw new Error('Something went wrong when updating the comment');
+    return res !== null;
+  },
+  deleteComment: async (_, { uid, commentId }) => {
+    const res = await CommentAt.findOneAndDelete({
+      $or: [
+        {
+          _id: commentId,
+          uid,
+        },
+        {
+          _id: commentId,
+          posterId: uid,
+        }, // poster can delete all comments under their post.
+      ],
+    });
+
+    if (!res) {
+      throw new Error('Comment not found.');
     }
 
-    const user = await User.findById(uid);
+    return res !== null;
+  },
+  editComment: async (_, { uid, commentId, comment }) => {
+    const res = await CommentAt.findOneAndUpdate(
+      { _id: commentId, uid },
+      { comment }
+    );
 
-    return user;
+    if (!res) {
+      throw new Error('Comment not found.');
+    }
+
+    return res !== null;
   },
 };
 

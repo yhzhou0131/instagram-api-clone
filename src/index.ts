@@ -12,6 +12,7 @@ const main = async () => {
       httpServer.listen({ port: port }, resolve)
     );
     console.log(`🚀 Server ready at http://localhost:${port}/`);
+    console.log(`🚀 Apollo Server ready at http://localhost:${port}/graphql`);
   } catch {
     console.error('Cannot run the server.');
   }
