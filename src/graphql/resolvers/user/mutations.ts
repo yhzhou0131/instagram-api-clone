@@ -1,6 +1,7 @@
 import { Post, User } from '@/db/models/index.js';
 import likeMutations from './action/likeMutations.js';
 import commentMutations from './action/commentMutations.js';
+import followMutations from './action/followMutations.js';
 
 const userMutations = {
   createUser: async (_, { user }) => {
@@ -22,6 +23,7 @@ const userMutations = {
   },
   ...likeMutations,
   ...commentMutations,
+  ...followMutations,
 };
 
 export default userMutations;

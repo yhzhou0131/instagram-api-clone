@@ -15,14 +15,17 @@ type Mutation {
   updateUser(id: ID!, user: UserUpdateInput!): User!
   deleteUser(id: ID!): User
 
-  likePost(uid: ID!, postId: ID!): Boolean
-  dislikePost(uid: ID!, postId: ID!): Boolean
+  follow(uid: ID!, targetUser: ID!): Boolean!
+  unfollow(uid: ID!, targetUser: ID!): Boolean!
 
-  addComment(uid: ID!, postId: ID!, comment: String!): Boolean
-  deleteComment(uid: ID!, postId: ID!, commentId: ID!): Boolean
-  editComment(uid: ID!, commentId: ID!, comment: String!): Boolean
+  likePost(uid: ID!, postId: ID!): Boolean!
+  dislikePost(uid: ID!, postId: ID!): Boolean!
+
+  addComment(uid: ID!, postId: ID!, comment: String!): Boolean!
+  deleteComment(uid: ID!, postId: ID!, commentId: ID!): Boolean!
+  editComment(uid: ID!, commentId: ID!, comment: String!): Boolean!
 
   createPost(post: PostCreateInput!): Post!
   updatePost(id: ID!, post: PostUpdateInput!): Post!
-  deletePost(id: ID!): Post
+  deletePost(id: ID!): Post!
 }
