@@ -1,7 +1,8 @@
 import { Like } from '@/db/models/index.js';
+import { LikeInput } from '@/types/action.js';
 
 const likeMutations = {
-  likePost: async (_, { uid, postId }) => {
+  likePost: async ({}, { uid, postId }: LikeInput) => {
     const curTime = Date.now();
     const res = await Like.updateOne(
       { uid, postId },
@@ -11,7 +12,7 @@ const likeMutations = {
 
     return res.upsertedCount > 0;
   },
-  dislikePost: async (_, { uid, postId }) => {
+  dislikePost: async ({}, { uid, postId }: LikeInput) => {
     const res = await Like.deleteOne({
       uid,
       postId,

@@ -1,15 +1,16 @@
 import { CommentAt, Like, Post, User } from '@/db/models/index.js';
+import { MongoID } from '@/types/common.js';
 
 const userFields = {
   User: {
     posts: (user: any) => {
-      return user.posts.map((postId) => Post.findById(postId));
+      return user.posts.map((postId: MongoID) => Post.findById(postId));
     },
     followers: (user: any) => {
-      return user.followers.map((uid) => User.findById(uid));
+      return user.followers.map((uid: MongoID) => User.findById(uid));
     },
     following: (user: any) => {
-      return user.following.map((uid) => User.findById(uid));
+      return user.following.map((uid: MongoID) => User.findById(uid));
     },
     likedPosts: async (user: any) => {
       const userLikes = await Like.find({ uid: user._id });

@@ -22,6 +22,7 @@
     "sourceRoot": "./", // Specify the location where a debugger should locate TypeScript files instead of relative source locations.
 
     // Strict Checks
+    "strict": true,
     "alwaysStrict": true, // Ensures that your files are parsed in the ECMAScript strict mode, and emit “use strict” for each source file.
     "allowUnreachableCode": false, // pick up dead code paths
     "strictNullChecks": true, // When strictNullChecks is true, null and undefined have their own distinct types and you’ll get a type error if you try to use them where a concrete value is expected.

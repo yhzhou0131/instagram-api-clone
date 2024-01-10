@@ -1,7 +1,8 @@
 import { User } from '@/db/models/index.js';
+import { FollowInput } from '@/types/action.js';
 
 const followMutations = {
-  follow: async (_, { uid, targetUser }) => {
+  follow: async ({}, { uid, targetUser }: FollowInput) => {
     const res = await User.updateOne(
       { _id: uid },
       { $addToSet: { following: targetUser } }
@@ -16,7 +17,7 @@ const followMutations = {
     }
     return true;
   },
-  unfollow: async (_, { uid, targetUser }) => {
+  unfollow: async ({}, { uid, targetUser }: FollowInput) => {
     const res = await User.updateOne(
       { _id: uid },
       { $pull: { following: targetUser } }

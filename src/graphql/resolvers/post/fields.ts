@@ -6,7 +6,7 @@ const postFields = {
       const user = await User.findById(post.poster);
       return user;
     },
-    likedUsers: async (post) => {
+    likedUsers: async (post: any) => {
       const postLikes = await Like.find({ postId: post._id });
       return await Promise.all(
         postLikes.map(async (postLike) => {
@@ -19,7 +19,7 @@ const postFields = {
         })
       );
     },
-    commentedUsers: async (post) => {
+    commentedUsers: async (post: any) => {
       const postComments = await CommentAt.find({
         postId: post._id,
       }).setOptions({ sort: { updatedAt: -1 } });
