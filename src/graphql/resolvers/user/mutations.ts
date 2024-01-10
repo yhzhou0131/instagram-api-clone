@@ -1,6 +1,6 @@
 import { Post, User } from '@/db/models/index.js';
-import likeMutations from './likeMutations.js';
-import commentMutations from './commentMutations.js';
+import likeMutations from './action/likeMutations.js';
+import commentMutations from './action/commentMutations.js';
 
 const userMutations = {
   createUser: async (_, { user }) => {
