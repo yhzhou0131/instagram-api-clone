@@ -1,5 +1,7 @@
 type User implements Timestamps {
   id: ID!
+  email: String!
+  password: String!
   name: String!
   biography: String
   posts: [Post!]
@@ -15,6 +17,8 @@ type User implements Timestamps {
 type likedUser implements Timestamps {
   id: ID!
   name: String!
+  email: String!
+  password: String!
   biography: String
   posts: [Post!]
   followers: [User!]
@@ -32,6 +36,8 @@ type likedUser implements Timestamps {
 type commentedUser implements Timestamps {
   id: ID!
   name: String!
+  email: String!
+  password: String!
   biography: String
   posts: [Post!]
   followers: [User!]
@@ -49,10 +55,14 @@ type commentedUser implements Timestamps {
 
 input UserCreateInput {
   name: String!
+  email: String!
+  password: String!
   biography: String
 }
 
 input UserUpdateInput {
   name: String
+  email: String
+  password: String
   biography: String
 }

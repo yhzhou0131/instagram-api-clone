@@ -14,9 +14,9 @@ const seed = async () => {
   console.log('Database clean');
 
   const users = [
-    new User({ name: 'User 1' }),
-    new User({ name: 'User 2' }),
-    new User({ name: 'User 3' }),
+    new User({ name: 'User 1', email: 'user1@eamil.com', password: 'pwd1' }),
+    new User({ name: 'User 2', email: 'user2@eamil.com', password: 'pwd2' }),
+    new User({ name: 'User 3', email: 'user3@eamil.com', password: 'pwd3' }),
   ];
 
   // Obviously fake names
@@ -43,6 +43,8 @@ const seed = async () => {
   users.push(
     new User({
       name: 'User 4',
+      email: 'user4@email.com',
+      password: 'pwd4',
       followers: [users[0]?._id],
       following: [users[0]?._id],
     })

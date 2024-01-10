@@ -3,6 +3,8 @@ import mongoose, { Schema, model } from 'mongoose';
 const userSchema = new Schema(
   {
     name: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
     biography: String,
     posts: [{ type: mongoose.Types.ObjectId, ref: 'posts' }],
     followers: [{ type: mongoose.Types.ObjectId, ref: 'users' }],

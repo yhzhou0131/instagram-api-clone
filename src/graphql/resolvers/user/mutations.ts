@@ -12,12 +12,12 @@ const userMutations = {
     const updatedUser = await User.findByIdAndUpdate(id, user, { new: true }); // return the updated user
     return updatedUser;
   },
-  deleteUser: async (_, { uid }) => {
+  deleteUser: async (_, { id }) => {
     await Post.updateMany(
-      { $or: [{ 'likedUsers.id': uid }, { 'commentedUsers.id': uid }] },
-      { $pull: { likedUsers: { id: uid }, commentedUsers: { id: uid } } }
+      { $or: [{ 'likedUsers.id': id }, { 'commentedUsers.id': id }] },
+      { $pull: { likedUsers: { id: id }, commentedUsers: { id: id } } }
     );
-    const deletedUser = await User.findByIdAndDelete(uid);
+    const deletedUser = await User.findByIdAndDelete(id);
 
     return deletedUser;
   },
