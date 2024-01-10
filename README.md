@@ -8,6 +8,7 @@ This is a simple demo illustrating the interaction between Instagram users and p
 - Express
 - GraphQL
 - MongoDB
+- ioredis
 
 ## Features
 
