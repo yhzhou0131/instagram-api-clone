@@ -14,6 +14,7 @@ This is a simple demo illustrating the interaction between Instagram users and p
 **For user**
 
 - CRUD operations.
+- Follow/Unfollow an user.
 - Like/dislike a post.
 - Add/Delete/Edit a comment to the post.
 
