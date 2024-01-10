@@ -9,6 +9,7 @@ This is a simple demo illustrating the interaction between Instagram users and p
 - GraphQL
 - MongoDB
 - ioredis
+- zod
 
 ## Features
 
