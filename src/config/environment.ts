@@ -13,4 +13,9 @@ const mongo = {
   url: process.env.MONGO_URI || '',
 };
 
-export { port, env, mongo };
+const redis = {
+  host: process.env.REDIS_HOST || '127.0.0.1',
+  port: Number(process.env.REDIS_PORT) || 6379,
+};
+
+export { port, env, mongo, redis };

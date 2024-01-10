@@ -5,6 +5,8 @@ import cors from 'cors';
 import http from 'http';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
+import { Redis } from 'ioredis';
+import { redis } from '@/config/index.js';
 
 interface Context {
   token?: string;
@@ -13,6 +15,11 @@ interface Context {
 const app = express();
 
 const httpServer = http.createServer(app);
+
+const redisClient = new Redis({
+  host: redis.host,
+  port: redis.port,
+});
 
 const server = new ApolloServer<Context>({
   typeDefs,
@@ -28,7 +35,7 @@ app.use(
   cors<cors.CorsRequest>(),
   express.json(),
   expressMiddleware(server, {
-    context: async ({ req }) => ({ token: req.headers.token }),
+    context: async ({ req }) => ({ token: req.headers.token, redisClient }),
   })
 );
 

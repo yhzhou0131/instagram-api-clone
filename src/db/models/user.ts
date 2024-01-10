@@ -15,4 +15,10 @@ const userSchema = new Schema(
   }
 );
 
+userSchema.virtual('id').get(function () {
+  return this._id.toHexString();
+});
+
+userSchema.set('toJSON', { virtuals: true });
+
 export default model('users', userSchema);
