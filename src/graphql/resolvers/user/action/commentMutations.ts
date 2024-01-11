@@ -6,7 +6,7 @@ import {
 } from '@/types/action.js';
 
 const commentMutations = {
-  addComment: async ({}, { uid, postId, comment }: AddCommentInput) => {
+  addComment: async (_: any, { uid, postId, comment }: AddCommentInput) => {
     const posterId = (await Post.findById(postId))?.poster;
     const res = await new CommentAt({
       uid,
@@ -17,7 +17,7 @@ const commentMutations = {
 
     return res !== null;
   },
-  deleteComment: async ({}, { uid, commentId }: DeleteCommentInput) => {
+  deleteComment: async (_: any, { uid, commentId }: DeleteCommentInput) => {
     const res = await CommentAt.findOneAndDelete({
       $or: [
         {

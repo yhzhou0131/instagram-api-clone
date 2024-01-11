@@ -35,7 +35,7 @@ app.use(
   cors<cors.CorsRequest>(),
   express.json(),
   expressMiddleware(server, {
-    context: async ({ req }) => ({ token: req.headers.token, redisClient }),
+    context: async () => ({ redisClient }),
   })
 );
 

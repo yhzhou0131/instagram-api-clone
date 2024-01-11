@@ -6,15 +6,15 @@ import { MongoID } from '@/types/common.js';
 import { CreateUserInput, UpdateUserInput } from '@/types/user.js';
 
 const userMutations = {
-  createUser: async ({}, { user }: CreateUserInput) => {
+  createUser: async (_: any, { user }: CreateUserInput) => {
     const newUser = new User(user);
     return newUser.save();
   },
-  updateUser: async ({}, { id, user }: UpdateUserInput) => {
+  updateUser: async (_: any, { id, user }: UpdateUserInput) => {
     const updatedUser = await User.findByIdAndUpdate(id, user, { new: true }); // return the updated user
     return updatedUser;
   },
-  deleteUser: async ({}, { id }: MongoID) => {
+  deleteUser: async (_: any, { id }: MongoID) => {
     await Post.updateMany(
       { $or: [{ 'likedUsers.id': id }, { 'commentedUsers.id': id }] },
       { $pull: { likedUsers: { id: id }, commentedUsers: { id: id } } }
