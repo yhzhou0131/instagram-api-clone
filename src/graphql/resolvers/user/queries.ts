@@ -13,7 +13,7 @@ const userQueries = {
     return users;
   },
   user: async (_: any, { id }: MongoID) => {
-    const user = await User.findById(id).populate({ path: 'likedPosts.id' });
+    const user = await User.findById(id);
     return user;
   },
 };
