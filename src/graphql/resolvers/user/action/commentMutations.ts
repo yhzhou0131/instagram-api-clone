@@ -4,9 +4,16 @@ import {
   DeleteCommentInput,
   EditCommentInput,
 } from '@/types/action.js';
+import { Context } from '@/types/common.js';
+import { clearCacheByKey } from '@/utils/util.js';
 
 const commentMutations = {
-  addComment: async (_: any, { uid, postId, comment }: AddCommentInput) => {
+  addComment: async (
+    _: any,
+    { uid, postId, comment }: AddCommentInput,
+    { redisClient }: Context
+  ) => {
+    await clearCacheByKey(redisClient, 'users');
     const posterId = (await Post.findById(postId))?.poster;
     const res = await new CommentAt({
       uid,
@@ -17,7 +24,12 @@ const commentMutations = {
 
     return res !== null;
   },
-  deleteComment: async (_: any, { uid, commentId }: DeleteCommentInput) => {
+  deleteComment: async (
+    _: any,
+    { uid, commentId }: DeleteCommentInput,
+    { redisClient }: Context
+  ) => {
+    await clearCacheByKey(redisClient, 'users');
     const res = await CommentAt.findOneAndDelete({
       $or: [
         {
@@ -37,7 +49,12 @@ const commentMutations = {
 
     return res !== null;
   },
-  editComment: async ({}, { uid, commentId, comment }: EditCommentInput) => {
+  editComment: async (
+    _: any,
+    { uid, commentId, comment }: EditCommentInput,
+    { redisClient }: Context
+  ) => {
+    await clearCacheByKey(redisClient, 'users');
     const res = await CommentAt.findOneAndUpdate(
       { _id: commentId, uid },
       { comment }

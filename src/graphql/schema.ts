@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync } from 'fs';
 import { join } from 'path';
-import getDirName from '@/utils/util.js';
+import { getDirName } from '@/utils/util.js';
 
 const __dirname = getDirName(import.meta);
 

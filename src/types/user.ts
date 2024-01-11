@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { z } from 'zod';
 
-const createUserInputSchema = z.object({
+export const createUserInputSchema = z.object({
   user: z.object({
     name: z.string(),
     email: z.string().email({ message: 'Invalid email address.' }),
